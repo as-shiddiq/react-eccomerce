@@ -26,7 +26,7 @@ class ProdukProvider extends Component {
         let tempProduks = [];
         storeProducts.forEach(item => {
             const singleItem = {...item};
-            if (localStorage.getItem('cart') !== '') {
+            if (localStorage.getItem('cart') !== null) {
                 let getCartLocalStorage = JSON.parse(localStorage.getItem('cart'));
                 getCartLocalStorage.forEach(items => {
                     // console.log(singleItem);
@@ -77,7 +77,7 @@ class ProdukProvider extends Component {
         })
         this.setState(()=>{
             // localStorage.setItem('cart', json.stringify()));
-            console.log(localStorage.setItem('cart', JSON.stringify([...this.state.cart, produk])));
+            localStorage.setItem('cart', JSON.stringify([...this.state.cart, produk]));
             return {produks:tempProduks, cart: [...this.state.cart,produk]};
         },
         ()=>{
@@ -107,7 +107,7 @@ class ProdukProvider extends Component {
         produk.total = produk.count * produk.price;
 
         this.setState(()=>{
-            console.log(localStorage.setItem('cart', JSON.stringify([...tempCart])));
+            localStorage.setItem('cart', JSON.stringify([...tempCart]));
 
             return {
                 cart : [...tempCart]
@@ -131,7 +131,7 @@ class ProdukProvider extends Component {
         else{
             produk.total = produk.count * produk.price;
             this.setState(() => {
-                console.log(localStorage.setItem('cart', JSON.stringify([...tempCart])));
+                localStorage.setItem('cart', JSON.stringify([...tempCart]));
                 return {
                     cart: [...tempCart]
                 }
@@ -161,7 +161,7 @@ class ProdukProvider extends Component {
             icon: 'success'
         })
         this.setState(()=>{
-            console.log(localStorage.setItem('cart', JSON.stringify([...tempCart])));
+            localStorage.setItem('cart', JSON.stringify([...tempCart]));
             return {
                 cart : [...tempCart],
                 produks : [...tempProduks],
@@ -177,6 +177,7 @@ class ProdukProvider extends Component {
             text: 'Keranjang berhasil dikosongkan!',
             icon: 'success'
         })
+        localStorage.removeItem('cart');
         this.setState(()=>{
             return {
                 cart : []
