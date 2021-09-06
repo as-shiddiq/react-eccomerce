@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
-import { ThemeConsumer } from 'styled-components';
 import {storeProducts,detailProduct} from './data';
+import Swal from 'sweetalert2';
 
 const ProdukContext = React.createContext();
 
@@ -9,7 +9,8 @@ class ProdukProvider extends Component {
     state = {
         produks : storeProducts,
         detailProduk : detailProduct,
-        cart : [],
+        cart: JSON.parse(localStorage.getItem('cart')) || [],
+        // cart: [],
         modalOpen : false,
         modalProduk : detailProduct,
         cartSubtotal : 0,
@@ -25,12 +26,26 @@ class ProdukProvider extends Component {
         let tempProduks = [];
         storeProducts.forEach(item => {
             const singleItem = {...item};
+            if (localStorage.getItem('cart') !== '') {
+                let getCartLocalStorage = JSON.parse(localStorage.getItem('cart'));
+                getCartLocalStorage.forEach(items => {
+                    // console.log(singleItem);
+                    if (singleItem.id === items.id)
+                    {
+                        singleItem.inCart = true;
+                        console.log(singleItem.inCart);
+                    }
+                })
+            }
             tempProduks = [...tempProduks,singleItem];
         });
 
-        this.setState(()=>{
-            return {produks:tempProduks};
+        this.addTotals();
+
+        this.setState(() => {
+            return { produks: tempProduks };
         });
+
     }
 
     getItem = (id) => {
@@ -54,7 +69,15 @@ class ProdukProvider extends Component {
         produk.count = 1;
         const  price = produk.price;
         produk.total = price;
+
+        const Swal = require('sweetalert2');
+        Swal.fire({
+            text : 'Produk berhasil ditambahkan ke keranjang!',
+            icon: 'success'
+        })
         this.setState(()=>{
+            // localStorage.setItem('cart', json.stringify()));
+            console.log(localStorage.setItem('cart', JSON.stringify([...this.state.cart, produk])));
             return {produks:tempProduks, cart: [...this.state.cart,produk]};
         },
         ()=>{
@@ -84,6 +107,8 @@ class ProdukProvider extends Component {
         produk.total = produk.count * produk.price;
 
         this.setState(()=>{
+            console.log(localStorage.setItem('cart', JSON.stringify([...tempCart])));
+
             return {
                 cart : [...tempCart]
             }
@@ -106,6 +131,7 @@ class ProdukProvider extends Component {
         else{
             produk.total = produk.count * produk.price;
             this.setState(() => {
+                console.log(localStorage.setItem('cart', JSON.stringify([...tempCart])));
                 return {
                     cart: [...tempCart]
                 }
@@ -129,7 +155,13 @@ class ProdukProvider extends Component {
         removeProduk.inCart = false;
         removeProduk.count = 0;
         removeProduk.total = 0;
+
+        Swal.fire({
+            text: 'Produk berhasil dihapus dari keranjang!',
+            icon: 'success'
+        })
         this.setState(()=>{
+            console.log(localStorage.setItem('cart', JSON.stringify([...tempCart])));
             return {
                 cart : [...tempCart],
                 produks : [...tempProduks],
@@ -140,7 +172,11 @@ class ProdukProvider extends Component {
         })
     }
 
-    clearCart = (id) => {
+    clearCart = () => {
+        Swal.fire({
+            text: 'Keranjang berhasil dikosongkan!',
+            icon: 'success'
+        })
         this.setState(()=>{
             return {
                 cart : []

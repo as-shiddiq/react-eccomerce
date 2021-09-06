@@ -8,7 +8,7 @@ class Produk extends Component {
     render() {
         const {id,title,img,price,inCart} = this.props.produk;
         return (
-            <ProdukWrapper className="col-9 mx-auto col-md-6 col-lg-3 my-3">
+            <ProdukWrapper className="col-12 mx-auto col-md-6 col-lg-3 mx-1 mb-3">
                 <div className="card">
                     <ProdukConsumer>
                         {value => (
@@ -19,7 +19,7 @@ class Produk extends Component {
                                 <img src={img} alt={title} className="card-img-top" />
                             </Link>
 
-                            <button className="cart-btn" disabled={inCart?true:false}
+                            <button className="cart-btn btn btn-primary" disabled={inCart?true:false}
                                 onClick={()=>{
                                     value.addToCart(id);
                                     value.openModal(id);
@@ -90,7 +90,7 @@ const ProdukWrapper = styled.div`
         overflow : hidden;
     }
     .card-img-top{
-        transition : all .5s linear;
+        transition : all .2s linear;
     }
     .img-container:hover .card-img-top {
         transform : scale(1.2);
@@ -99,21 +99,15 @@ const ProdukWrapper = styled.div`
         position : absolute;
         bottom : 0;
         right : 0;
-        padding : .2rem .4rem;
-        background : var(--lightBlue);
         border : none;
         color : var(--mainWhite);
         font-size : 1.3rem;
         border-radius : .5rem 0 0 0;
-        transition : all .5s linear;
+        transition : all .2s linear;
         transform : translate(100%,100%);
     }
     .img-container:hover .cart-btn {
         transform : translate(0,0);
-    }
-    .cart-btn:hover {
-        color : var(--mainBlue);
-        cursor : pointer;
     }
 
 `;

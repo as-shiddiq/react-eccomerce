@@ -1,39 +1,52 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
-import styled from 'styled-components';
-import logo from "../logo.svg";
-import { ButtonContainer } from './Button';
+import logo from "../logo.png";
+import { ProdukConsumer } from '../Context';
+import { Fragment } from 'react/cjs/react.production.min';
 
-class Navbar extends Component {
-    render() {
-        return (
-            <NavWrapper className="navbar navbar-expand-sm px-sm-5 justify-content-between">
-                <Link to="/">
-                    <img src={logo} alt="Store" className="nav-bar-brand" />
-                </Link>
-                <ul className="navbar-nav align-items-center">
-                    <li className="nav-item ml-5">
-                        <Link to="/" className="nav-link">Produk</Link>
-                    </li>
-                </ul>
-                <Link to="/cart"className="ml-auto">
-                    <ButtonContainer>
-                        <span className="fa fa-cart-plus"></span>
-                        &nbsp;My Cart
-                    </ButtonContainer>
-                </Link>
-            </NavWrapper>
-        );
-    }
+function Navbar(props) {
+    return (
+        <ProdukConsumer>
+            {value => {
+                const cart = value.cart;
+                return (
+                    <Fragment>
+                        <div className="navbar navbar-expand-sm px-sm-5 justify-content-between bg-dark mb-3">
+                            <Link to="/">
+                                <img src={logo} alt="Store" className="nav-bar-brand mx-1" width="40px" />
+                            </Link>
+                            <ul className="navbar-nav align-items-center">
+                                <li className="nav-item ml-5">
+                                    <Link to="/" className="text-decoration-none">
+                                        <h4 className="m-0 p-0 fw-bold text-white">as-shiddiq Store</h4>
+                                    </Link>
+                                </li>
+                            </ul>
+                            <Link to="/cart" className="mx-1">
+                                <button className="btn btn-primary">
+                                    {
+                                        (cart.length > 0) ? <span className="badge bg-warning">{cart.length}</span> : ''
+                                    }
+                                    <span className="fa fa-cart-plus"></span>
+                                </button>
+                            </Link>
+                        </div>
+                        
+                        <div className="container mb-0">
+                            <h3>{props.title}</h3>
+                        </div>
+                    </Fragment>
+                )}
+            }
+
+        </ProdukConsumer>
+        
+        
+    );
 }
 
 export default Navbar;
 
-const NavWrapper = styled.nav`
-    background : var(--mainBlue);
-    .nav-link {
-        color : var(--mainWhite) !important;
-        font-size : 1.3rem;
-        text-transform : uppercase;
-    }
-`
+Navbar.defaultProps = {
+    title: 'Produk Kami'
+}

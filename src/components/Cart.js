@@ -1,28 +1,37 @@
 import React, { Component } from 'react';
-import Title from './Title';
 import CartColumns from './CartColumns';
 import EmptyCart from './EmptyCart';
 import {ProdukConsumer} from '../Context';
 import CartList from './CartList';
 import CartTotal from './CartTotal';
+import { Fragment } from 'react/cjs/react.production.min';
+import Navbar from './Navbar';
 
 
 class Cart extends Component {
     render() {
         return (
-            <section>
+            <Fragment>
+                <Navbar title="My Cart"/>
                 <ProdukConsumer>
                     {value => {
                         const {cart} = value;
                         if(cart.length>0)
                         {
                             return (
-                                <React.Fragment>
-                                    <Title name="Name" title="Title" />
-                                    <CartColumns />
-                                    <CartList value={value}/>
-                                    <CartTotal value={value} />
-                                </React.Fragment>
+                                <div className="container">
+                                    <div className="card mb-3">
+                                        <div className="card-body">
+                                            <CartColumns />
+                                            <CartList value={value}/>
+                                        </div>
+                                    </div>
+                                    <div className="card">
+                                        <div className="card-body">
+                                            <CartTotal value={value} />
+                                        </div>
+                                    </div>
+                                </div>
                             )
                         }
                         else{
@@ -32,7 +41,7 @@ class Cart extends Component {
                         }
                     }}
                 </ProdukConsumer>
-            </section>
+            </Fragment>
         );
     }
 }

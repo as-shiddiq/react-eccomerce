@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import styled from 'styled-components';
 import {ProdukConsumer} from '../Context';
-import {ButtonContainer} from './Button';
 import {Link} from 'react-router-dom';
 
 
@@ -28,14 +27,14 @@ class Modal extends Component {
                                         <h5>{title}</h5>
                                           <h5 className="text-muted">price : Rp. <span>{price}</span></h5>
                                           <Link to="/">
-                                              <ButtonContainer onClick={() => closeModal()} className="me-2">
+                                              <button onClick={() => closeModal()} className="me-2 btn btn-warning">
                                                   Continue Shopping
-                                              </ButtonContainer>
+                                              </button>
                                           </Link>
                                           <Link to="/cart">
-                                              <ButtonContainer cart onClick={() => closeModal()}>
+                                              <button cart onClick={() => closeModal()} className="btn btn-success">
                                                 Go to cart
-                                              </ButtonContainer>
+                                              </button>
                                           </Link>
                                     </div>
                                 </div>

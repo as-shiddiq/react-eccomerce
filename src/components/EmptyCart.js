@@ -2,13 +2,15 @@ import React from 'react';
 
 export default function CartColumns() {
     return (
-       <div className="container mt-5">
-           <div className="row mt-5">
-            <div className="col-10 mx-auto text-center text-title">
-                <h1>Your cart is empty</h1>
+        <div className="container">
+            <div className="row mt-3 mx-auto">
+            <div className="col-12 mx-auto text-center text-title card">
+                <div className="card-body">
+                    <h5 className="fw-bold">Your cart is empty</h5>
+                </div>
             </div>
-           </div>
-       </div>
+            </div>
+        </div>
     );
 }
 

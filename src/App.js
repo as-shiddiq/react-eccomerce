@@ -1,4 +1,3 @@
-import logo from './logo.svg';
 import './App.css';
 import '../node_modules/bootstrap/dist/css/bootstrap.min.css';
 import React from 'react';
@@ -9,11 +8,11 @@ import Details from './components/Details';
 import Cart from './components/Cart';
 import Default from './components/Default';
 import Modal from './components/Modal';
+import { Fragment } from 'react/cjs/react.production.min';
 
 function App() {
     return (
-      <React.Fragment>
-        <Navbar />
+      <Fragment>
         <Switch>
           <Route exact path="/" component={ProdukList} />
           <Route path="/details" component={Details} />
@@ -21,7 +20,7 @@ function App() {
           <Route component={Default}/>
         </Switch>
         <Modal/>
-      </React.Fragment>
+      </Fragment>
     );
 }
 
